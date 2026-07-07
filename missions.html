@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LOOP | Missions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #070014, #020105);
+  color: #e6f0ff;
+}
+ .simulation-box{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:460px;
+max-width:90vw;
+max-height:85vh;
+overflow-y:auto;
+padding:20px;
+background:rgba(5,10,30,.97);
+border:2px solid cyan;
+border-radius:20px;
+box-shadow:0 0 25px cyan;
+text-align:center;
+z-index:9999;
+}
+#launchButton{
+
+background:black;
+color:#7df9ff;
+
+border:1px solid cyan;
+
+padding:10px 20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-family:'Orbitron';
+
+margin:10px;
+
+}
+
+
+#launchButton:hover{
+
+box-shadow:0 0 15px cyan;
+
+}
+#analyzeMarsSampleButton{
+
+background:black;
+
+color:#7df9ff;
+
+border:1px solid cyan;
+
+padding:10px 20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-family:'Orbitron';
+
+margin:10px;
+
+transition:.3s;
+
+}
+
+
+#analyzeMarsSampleButton:hover{
+
+box-shadow:0 0 15px cyan;
+
+transform:scale(1.05);
+
+}
+
+.mission-data{
+
+background:rgba(0,255,255,.08);
+
+border-radius:15px;
+
+padding:10px;
+
+margin-top:10px;
+
+font-size:13px;
+
+}
+  #marsSampleLab,
+#marsScientistDecision{
+
+
+margin-top:15px;
+
+
+padding:15px;
+
+
+background:rgba(181,107,255,.12);
+
+
+border:1px solid rgba(181,107,255,.5);
+
+
+border-radius:15px;
+
+
+font-size:13px;
+
+
+}
+
+
+
+#marsSampleLab h4,
+#marsScientistDecision h4{
+
+
+color:#b56bff;
+
+
+text-shadow:0 0 10px #b56bff;
+
+
+}
+
+
+
+#marsScientistDecision button{
+
+
+background:black;
+
+
+color:#7df9ff;
+
+
+border:1px solid cyan;
+
+
+padding:8px;
+
+
+border-radius:10px;
+
+
+margin:5px;
+
+
+cursor:pointer;
+
+
+font-family:'Orbitron';
+
+
+}
+
+
+
+#marsScientistDecision button:hover{
+
+
+box-shadow:0 0 15px cyan;
+
+
+}
+
+#planet, #climatePlanet{
+
+font-size:90px;
+
+margin-top:30px;
+
+transition:.3s;
+
+}
+#europaCanvas{
+
+background:#031323;
+
+border-radius:15px;
+
+border:1px solid cyan;
+
+box-shadow:0 0 15px cyan;
+
+margin-top:10px;
+
+}
+  #scanButton{
+
+background:black;
+
+color:#7df9ff;
+
+border:1px solid cyan;
+
+padding:10px 20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-family:'Orbitron';
+
+margin-top:10px;
+
+}
+
+
+#scanButton:hover{
+
+box-shadow:0 0 15px cyan;
+
+}
+
+
+#scanResults{
+
+margin-top:15px;
+
+padding:12px;
+
+background:rgba(125,249,255,.08);
+
+border-radius:15px;
+
+font-size:13px;
+
+}
+
+
+
+input[type="range"]{
+
+width:80%;
+
+}
+  #missionLog{
+
+margin-top:15px;
+
+background:rgba(0,255,255,.08);
+
+border:1px solid rgba(125,249,255,.3);
+
+border-radius:15px;
+
+padding:12px;
+
+text-align:left;
+
+font-size:12px;
+
+max-height:120px;
+
+overflow-y:auto;
+
+}
+
+
+#missionLog h4{
+
+color:#7df9ff;
+
+margin-top:0;
+
+}
+
+
+.log-entry{
+
+margin-bottom:8px;
+
+}
+  #bioPanel{
+
+margin-top:15px;
+
+padding:12px;
+
+background:rgba(181,107,255,.12);
+
+border:1px solid rgba(181,107,255,.4);
+
+border-radius:15px;
+
+font-size:13px;
+
+}
+
+
+#bioPanel h4{
+
+color:#b56bff;
+
+}
+#missionReport{
+
+margin-top:15px;
+
+padding:15px;
+
+background:rgba(0,255,150,.1);
+
+border:1px solid rgba(0,255,150,.4);
+
+border-radius:15px;
+
+font-size:13px;
+
+}
+
+
+#missionReport h4{
+
+color:#7dffb2;
+
+}
+
+
+#reportButton{
+
+background:black;
+
+color:#7df9ff;
+
+border:1px solid cyan;
+
+padding:10px 20px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-family:'Orbitron';
+
+margin-top:10px;
+
+}
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(10,5,30,0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(125,249,255,0.2);
+}
+
+nav a {
+  color: #7df9ff;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 12px;
+}
+
+/* HEADER */
+.header {
+  padding: 120px 20px 40px;
+  text-align: center;
+}
+
+.header h1 {
+  color: #7df9ff;
+  text-shadow: 0 0 20px #7df9ff;
+}
+
+.header p {
+  max-width: 700px;
+  margin: auto;
+  opacity: 0.8;
+}
+
+/* SECTION */
+.section {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.section h2 {
+  color: #7df9ff;
+  text-shadow: 0 0 10px #7df9ff;
+  margin-bottom: 20px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* CARD */
+.card {
+  background: rgba(20,10,40,0.5);
+  border: 1px solid rgba(125,249,255,0.2);
+  border-radius: 14px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(125,249,255,0.2);
+}
+
+.card h3 {
+  color: #b56bff;
+  margin-bottom: 10px;
+}
+
+/* TAG */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 10px;
+  background: rgba(125,249,255,0.2);
+  color: #7df9ff;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  opacity: 0.5;
+  font-size: 12px;
+}
+  /* ================================
+   ANCIENT MARS EXPLORER STYLING
+================================ */
+
+
+#marsExplorerCanvas{
+
+background:#050505;
+
+border:2px solid #ff5533;
+
+border-radius:15px;
+
+box-shadow:
+0 0 20px #ff5533,
+0 0 40px rgba(255,85,51,.5);
+
+margin-top:15px;
+
+}
+
+
+
+
+#marsDeployButton{
+
+
+background:black;
+
+color:#ff7755;
+
+border:1px solid #ff5533;
+
+padding:12px 25px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-family:'Orbitron';
+
+font-size:14px;
+
+margin:15px;
+
+
+transition:.3s;
+
+}
+
+
+
+#marsDeployButton:hover{
+
+
+box-shadow:
+0 0 20px #ff5533;
+
+
+transform:scale(1.05);
+
+
+}
+
+
+
+
+#marsMissionLog{
+
+
+margin-top:15px;
+
+
+background:
+rgba(255,85,51,.08);
+
+
+border:
+
+1px solid rgba(255,85,51,.4);
+
+
+border-radius:15px;
+
+
+padding:12px;
+
+
+text-align:left;
+
+
+font-size:12px;
+
+
+max-height:140px;
+
+
+overflow-y:auto;
+
+
+}
+
+
+
+
+#marsMissionLog h4{
+
+
+color:#ff7755;
+
+
+text-shadow:
+
+0 0 10px #ff5533;
+
+
+margin-top:0;
+
+
+}
+
+
+
+
+#marsFinalReport{
+
+
+margin-top:20px;
+
+
+padding:15px;
+
+
+background:
+
+rgba(0,255,150,.08);
+
+
+border:
+
+1px solid rgba(0,255,150,.5);
+
+
+border-radius:15px;
+
+
+box-shadow:
+
+0 0 15px rgba(0,255,150,.3);
+
+
+
+animation:
+reportAppear 1s ease;
+
+
+}
+
+
+
+
+#marsFinalReport h4{
+
+
+color:#7dffb2;
+
+
+text-shadow:
+
+0 0 10px #7dffb2;
+
+
+}
+
+
+
+
+#marsSim h3{
+
+
+color:#ff7755;
+
+
+text-shadow:
+
+0 0 15px #ff5533;
+
+
+}
+
+
+
+#marsSim p{
+
+
+font-family:Arial,sans-serif;
+
+line-height:1.5;
+
+
+}
+
+
+
+
+#marsSim .mission-data{
+
+
+border:
+
+1px solid rgba(255,85,51,.4);
+
+
+background:
+
+rgba(255,85,51,.08);
+
+
+}
+
+
+
+
+@keyframes reportAppear{
+
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div> LOOP MISSIONS</div>
+  <div>
+    <a href="index.html">HOME</a>
+    <a href="spacechat.html">SPACECHAT</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>MISSIONS & SIMULATION LAB</h1>
+  <p>
+    A structured system for observing space, forming hypotheses, and running safe at-home science simulations.
+  </p>
+</div>
+
+<!-- MISSIONS -->
+<div class="section">
+  <h2> Observation Missions</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Terrain Explorer</h3>
+      Compare Earth’s terrain to Mars discoveries.
+      <div class="tag">Observation</div>
+    </div>
+
+    <div class="card">
+      <h3>Moon Tracking</h3>
+      Observe the Moon for multiple nights and note how its position or shape changes.
+      <div class="tag">Pattern Study</div>
+    </div>
+
+    <div class="card">
+      <h3>Light Pollution Test</h3>
+      Compare star visibility in different lighting environments.
+      <div class="tag">Environment</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SIMULATION LAB -->
+<div class="section">
+  <h2> Simulation Lab</h2>
+
+  <div class="grid">
+    
+<div class="card ebook-card" onclick="openMars()">
+  <h3>🌱Mars Plant Simulation</h3>
+  <p>Grow a plant in Mars-like soil conditions and compare results.</p>
+  <div class="tag"> Open Ebook</div>
+</div>
+
+<script>
+function openMars(){
+  window.top.location.href = "https://canva.link/p6vs5tvqqb75oz7";
+}
+</script>
+    <div class="card ebook-card" onclick="openRadiation()">
+  <h3>☢️ Radiation Shielding Challenge</h3>
+  <p>Design and test materials to discover which shield best protects against simulated space radiation.</p>
+  <div class="tag">Open Ebook</div>
+</div>
+
+<script>
+function openRadiation(){
+  window.top.location.href = "https://canva.link/dv4itmuptqzm1zj";
+}
+</script>
+
+   <div class="card ebook-card" onclick="openAstrobiology()">
+  <h3>🪐 Astrobiology Research Mission</h3>
+  <p>Investigate a real exoplanet using scientific data and determine its potential to support life.</p>
+  <div class="tag">Open Ebook</div>
+</div>
+
+<script>
+function openAstrobiology(){
+  window.top.location.href = "https://canva.link/5zd8sryhv1eehlm";
+}
+</script>
+
+    <div class="card">
+      <h3>Light Visibility Space Test</h3>
+      Test how small lights appear in dark vs bright rooms.
+      <br><br>
+      Goal: simulate star visibility in space vs Earth light pollution.
+      <div class="tag">Observation Model</div>
+    </div>
+    <!-- GRAVITY SIMULATION -->
+<div class="card ebook-card" onclick="openGravitySim()">
+  <h3>🌊 Europa Ocean Explorer</h3>
+  <p>Adjust a planet's mass and see how gravity changes.</p>
+  <div class="tag">Interactive Simulation</div>
+</div>
+
+
+<!-- ANCIENT MARS SIMULATION -->
+<div class="card ebook-card" onclick="openMarsExplorer()">
+
+<h3>🔴 Ancient Mars Explorer</h3>
+
+<p>
+Deploy a rover and investigate whether ancient Mars had conditions that could have supported life.
+</p>
+
+<div class="tag">
+Interactive Simulation
+</div>
+
+</div>
+
+
+  </div>
+</div>
+
+<!-- WHY IT MATTERS -->
+<div class="section">
+  <h2> Why This Exists</h2>
+  <div class="card">
+    LOOP is designed to help students think like scientists:
+    <br><br>
+    • Make observations  
+    • Build hypotheses  
+    • Test simple models  
+    • Connect ideas to real astronomy  
+  </div>
+</div>
+
+<footer>
+  LOOP Project — Scientific reasoning through observation and simulation.
+</footer>
+  <!-- SIMULATION WINDOW -->
+<div id="simulationBox" class="simulation-box">
+
+  <button onclick="closeSimulation()">✕ Close</button>
+
+  <h2 id="simTitle"></h2>
+  <p id="simDescription"></p>
+
+
+ <!-- EUROPA SIMULATOR -->
+
+<div id="gravitySim" style="display:none;">
+
+<h3>🌊 Europa Ocean Explorer</h3>
+
+<p>
+Mission: Explore Europa's hidden ocean and search for environments where life could exist.
+</p>
+
+
+<canvas id="europaCanvas" width="360" height="260"></canvas>
+
+
+<br>
+
+
+<button id="launchButton" onclick="launchProbe()">
+ Launch Probe
+</button>
+
+
+<div class="mission-data">
+
+<p>
+Depth:
+<span id="depthValue">0</span> km
+</p>
+
+
+<p>
+Battery:
+<span id="batteryValue">100</span>%
+</p>
+
+
+<p>
+Temperature:
+<span id="temperatureValue">-170</span>°C
+</p>
+
+
+<p>
+Radiation:
+<span id="radiationValue">HIGH</span>
+</p>
+
+
+</div>
+
+
+<p id="missionMessage">
+Awaiting launch...
+</p>
+
+<button 
+id="scanButton" 
+onclick="startScan()" 
+style="display:none;">
+📡 Begin Ocean Scan
+</button>
+
+
+<div id="scanResults"></div>
+  <div id="bioPanel" style="display:none;">
+
+<h4>🧬 Biosignature Analyzer</h4>
+
+<p>
+Liquid Water:
+<span id="waterResult">---</span>
+</p>
+
+<p>
+Organic Molecules:
+<span id="organicResult">---</span>
+</p>
+
+<p>
+Energy Sources:
+<span id="energyResult">---</span>
+</p>
+
+<p>
+Stable Environment:
+<span id="stableResult">---</span>
+</p>
+
+
+<h4 id="finalAssessment">
+Awaiting analysis...
+</h4>
+
+
+</div>
+  <div id="missionReport" style="display:none;">
+
+<h4>🏆 Europa Mission Report</h4>
+
+<p>
+Explorer:
+<br>
+LOOP Probe-01
+</p>
+
+
+<p>
+Maximum Depth:
+<br>
+<span id="reportDepth">---</span> km
+</p>
+
+
+<p>
+Ocean Detection:
+<br>
+<span id="reportOcean">---</span>
+</p>
+
+
+<p>
+Chemistry Scan:
+<br>
+<span id="reportChemistry">---</span>
+</p>
+
+
+<p>
+Biosignature Analysis:
+<br>
+<span id="reportBio">---</span>
+</p>
+
+
+<h4 id="missionConclusion">
+Awaiting final assessment...
+</h4>
+
+
+</div>
+
+
+<button 
+id="reportButton"
+onclick="generateReport()"
+style="display:none;">
+
+📋 Generate Mission Report
+
+</button>
+  <div id="missionLog">
+
+<h4>🛰️ Mission Control Log</h4>
+
+<div id="logEntries">
+Awaiting launch...
+</div>
+
+</div>
+
+</div>
+
+
+  <!-- ANCIENT MARS EXPLORER -->
+
+<div id="marsSim" style="display:none;">
+
+<h3>🔴 Ancient Mars Explorer</h3>
+
+<p>
+Mission: Investigate ancient Martian environments and search for evidence of past habitability.
+</p>
+
+
+<canvas id="marsExplorerCanvas" width="380" height="260"></canvas>
+
+
+<br>
+
+<button id="marsDeployButton" onclick="deployMarsRover()">
+
+ Deploy Rover
+
+</button>
+  <button 
+id="analyzeMarsSampleButton" 
+onclick="analyzeMarsSample()" 
+style="display:none;">
+
+🔬 Analyze Rock Sample
+
+</button>
+
+
+<div class="mission-data">
+
+
+<p>
+Distance Traveled:
+<span id="marsDistance">
+0
+</span>
+km
+</p>
+
+
+<p>
+Samples Collected:
+<span id="marsSamples">
+0
+</span>
+</p>
+
+
+<p>
+Rover Status:
+<span id="marsStatus">
+Awaiting Deployment
+</span>
+
+</p>
+
+
+</div>
+
+
+<div id="marsMissionLog">
+
+<h4>
+🛰️ Mission Control Log
+</h4>
+
+
+<div id="marsLogs">
+
+Awaiting rover deployment...
+
+</div>
+
+
+</div>
+
+
+<div id="marsSampleLab" style="display:none;">
+
+<h4>
+🧪 Mars Sample Analysis Laboratory
+</h4>
+
+
+<p id="marsAnalysisText">
+
+Awaiting rock sample...
+
+</p>
+
+
+</div>
+
+
+
+<div id="marsScientistDecision" style="display:none;">
+
+<h4>
+ Scientist Decision
+</h4>
+
+
+<p>
+Based on the evidence collected, how would you classify ancient Mars?
+</p>
+
+
+<button onclick="marsDecision('life')">
+
+ Confirmed Past Life
+
+</button>
+
+
+<button onclick="marsDecision('habitable')">
+
+ Potentially Habitable Environment
+
+</button>
+
+
+<button onclick="marsDecision('nothing')">
+
+ No Evidence of Habitability
+
+</button>
+
+
+<p id="marsDecisionResult">
+
+Awaiting classification...
+
+</p>
+
+
+</div>
+<div id="marsFinalReport" style="display:none;">
+
+<h4>
+🏆 Ancient Mars Mission Report
+</h4>
+
+
+<p>
+Environment:
+<br>
+Ancient water evidence detected
+</p>
+
+
+<p>
+Minerals:
+<br>
+Clay minerals detected
+</p>
+
+
+<p>
+Organic Molecules:
+<br>
+Possible traces detected
+</p>
+
+
+<p>
+
+Habitability Assessment:
+<br>
+Mars once had environments that may have supported microbial life.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<script>
+function marsDecision(choice){
+
+
+let result =
+document.getElementById("marsDecisionResult");
+
+
+
+if(choice==="life"){
+
+
+result.innerHTML =
+"❌ Incorrect classification. Evidence does not confirm past life. Scientists require more evidence before making that claim.";
+
+
+}
+
+
+
+else if(choice==="habitable"){
+
+
+result.innerHTML =
+"✅ Correct! Ancient Mars may have contained environments with conditions suitable for microbial life.";
+
+
+addMarsLog("🏆 Scientific conclusion accepted.");
+
+
+unlockMarsAnalysis();
+
+
+}
+
+
+
+else{
+
+
+result.innerHTML =
+"⚠️ Evidence collected suggests ancient Mars was more complex than a simple 'no evidence' conclusion.";
+
+
+}
+
+
+}
+function openGravitySim(){
+
+document.getElementById("simulationBox").style.display="block";
+
+document.getElementById("gravitySim").style.display="block";
+
+document.getElementById("marsSim").style.display="none";
+
+}
+
+
+function openMarsExplorer(){
+
+document.getElementById("simulationBox").style.display="block";
+
+
+document.getElementById("gravitySim").style.display="none";
+
+
+document.getElementById("marsSim").style.display="block";
+
+
+}
+
+function closeSimulation(){
+
+document.getElementById("simulationBox").style.display="none";
+
+document.getElementById("marsSim").style.display="none";
+
+}
+
+</script>
+<script>
+
+let europa=document.getElementById("europaCanvas");
+
+let ctx=europa.getContext("2d");
+
+
+let probeDepth=0;
+
+let battery=100;
+
+let launched=false;
+
+
+function launchProbe(){
+
+if(launched) return;
+
+launched=true;
+
+
+addLog("🚀 Probe launched from spacecraft.");
+
+addLog("🧊 Entering Europa's ice shell.");
+
+
+document.getElementById("missionMessage").innerHTML =
+"🚀 Probe launched. Entering Europa's ice shell...";
+
+}
+
+function addLog(message){
+
+let log =
+document.getElementById("logEntries");
+
+
+if(log.innerHTML.includes("Awaiting launch...")){
+
+log.innerHTML="";
+
+}
+
+
+let entry =
+document.createElement("div");
+
+
+entry.className="log-entry";
+
+
+entry.innerHTML =
+"• " + message;
+
+
+log.appendChild(entry);
+
+
+log.scrollTop =
+log.scrollHeight;
+
+}
+function drawEuropa(){
+
+ctx.clearRect(
+0,
+0,
+360,
+260
+);
+
+
+// background
+
+ctx.fillStyle="black";
+
+ctx.fillRect(
+0,
+0,
+360,
+260
+);
+
+
+// Europa ice
+
+ctx.fillStyle="#8fdfff";
+
+ctx.fillRect(
+40,
+20,
+280,
+130
+);
+
+
+// ocean
+
+ctx.fillStyle="#004b8d";
+
+ctx.fillRect(
+40,
+150,
+280,
+80
+);
+
+
+// rocky core
+
+ctx.fillStyle="#444";
+
+ctx.fillRect(
+40,
+230,
+280,
+20
+);
+
+
+// cracks
+
+ctx.strokeStyle="white";
+
+for(let i=0;i<7;i++){
+
+ctx.beginPath();
+
+ctx.moveTo(
+60+i*35,
+20
+);
+
+ctx.lineTo(
+80+i*30,
+150
+);
+
+ctx.stroke();
+
+}
+
+
+// probe
+
+let probeY =
+25 + probeDepth;
+
+
+ctx.fillStyle="yellow";
+
+ctx.fillRect(
+175,
+probeY,
+10,
+15
+);
+
+
+
+if(launched){
+
+if(probeDepth < 190){
+
+probeDepth += .25;
+  if(Math.floor(probeDepth) == 50){
+
+addLog("☢️ Radiation levels decreasing.");
+
+}
+
+
+if(Math.floor(probeDepth) == 100){
+
+addLog("🌡️ Temperature rising as probe descends.");
+
+}
+
+
+if(Math.floor(probeDepth) == 150){
+
+addLog("🌊 Possible liquid environment approaching.");
+
+}
+
+battery -= .01;
+
+
+document.getElementById("depthValue").innerHTML=
+Math.floor(probeDepth/2);
+
+
+
+document.getElementById("batteryValue").innerHTML=
+Math.floor(battery);
+
+
+
+let temp =
+-170 + Math.floor(probeDepth);
+
+
+if(temp>5){
+
+temp=5;
+
+}
+
+
+document.getElementById("temperatureValue").innerHTML=temp;
+
+
+
+if(probeDepth < 70){
+
+document.getElementById("radiationValue").innerHTML=
+"HIGH";
+
+}
+
+else if(probeDepth < 140){
+
+document.getElementById("radiationValue").innerHTML=
+"MEDIUM";
+
+}
+
+else{
+
+document.getElementById("radiationValue").innerHTML=
+"LOW";
+
+}
+
+
+
+}
+
+
+else{
+
+
+document.getElementById("missionMessage").innerHTML=
+"🌊 Ocean reached! Begin searching for signs of habitability.";
+  addLog("🌊 Liquid ocean detected beneath ice.");
+
+addLog("📡 Preparing ocean chemistry scan.");
+
+
+document.getElementById("scanButton").style.display="inline-block";
+
+
+}
+
+}
+
+
+requestAnimationFrame(drawEuropa);
+
+}
+
+
+drawEuropa();
+  function startScan(){
+
+document.getElementById("scanButton").style.display="none";
+
+
+document.getElementById("scanResults").innerHTML =
+"📡 Scanning ocean chemistry...";
+
+
+addLog("📡 Ocean chemistry scan started.");
+
+
+
+setTimeout(function(){
+
+
+let discoveries=[
+
+
+"🧂 High salt concentration detected.<br>Possible evidence of a liquid water environment.",
+
+
+"🧪 Organic molecules detected.<br>These chemicals are important ingredients for life.",
+
+
+"🌋 Possible hydrothermal activity detected.<br>Energy sources may exist on the ocean floor.",
+
+
+"🌊 Stable liquid water environment confirmed.<br>Europa remains a promising location for astrobiology research."
+
+
+];
+
+
+
+let result =
+discoveries[
+Math.floor(Math.random()*discoveries.length)
+];
+
+
+
+document.getElementById("scanResults").innerHTML =
+result +
+"<br><br>Habitability Assessment: POSSIBLE";
+
+
+
+document.getElementById("bioPanel").style.display =
+"block";
+
+
+analyzeEuropa();
+
+
+addLog("🧪 Ocean chemistry scan complete.");
+
+addLog("📊 Data transmitted to Mission Control.");
+
+
+},2000);
+
+
+}
+function analyzeEuropa(){
+
+
+let water =
+[
+"CONFIRMED",
+"DETECTED",
+"STABLE"
+];
+
+
+let organic =
+[
+"DETECTED",
+"POSSIBLE",
+"TRACE AMOUNTS"
+];
+
+
+let energy =
+[
+"POSSIBLE",
+"LIKELY",
+"UNDER INVESTIGATION"
+];
+
+
+let environment =
+[
+"STABLE",
+"FAVORABLE",
+"UNKNOWN"
+];
+
+
+
+document.getElementById("waterResult").innerHTML =
+water[Math.floor(Math.random()*water.length)];
+
+
+
+document.getElementById("organicResult").innerHTML =
+organic[Math.floor(Math.random()*organic.length)];
+
+
+
+document.getElementById("energyResult").innerHTML =
+energy[Math.floor(Math.random()*energy.length)];
+
+
+
+document.getElementById("stableResult").innerHTML =
+environment[Math.floor(Math.random()*environment.length)];
+
+
+
+document.getElementById("finalAssessment").innerHTML =
+"🌊 Europa contains multiple factors scientists consider important when evaluating possible habitability.";
+
+
+
+
+
+addLog("🧬 Biosignature analysis complete.");
+
+addLog("📋 Scientific assessment generated.");
+  document.getElementById("reportButton").style.display =
+"inline-block";
+
+
+addLog("🏆 Mission ready for final report.");
+
+}
+  function generateReport(){
+
+
+document.getElementById("missionReport").style.display =
+"block";
+
+
+document.getElementById("reportDepth").innerHTML =
+Math.floor(probeDepth/2);
+
+
+document.getElementById("reportOcean").innerHTML =
+"DETECTED ✅";
+
+
+document.getElementById("reportChemistry").innerHTML =
+"COMPLETE ✅";
+
+
+document.getElementById("reportBio").innerHTML =
+"COMPLETED ✅";
+
+
+document.getElementById("missionConclusion").innerHTML =
+
+"🌊 Europa contains multiple conditions scientists consider important when evaluating possible habitability.";
+
+
+
+addLog("📋 Final Europa mission report generated.");
+
+}
+  // ================================
+// ANCIENT MARS EXPLORER SIMULATION
+// ================================
+
+
+let marsCanvas = document.getElementById("marsExplorerCanvas");
+
+let marsCtx = marsCanvas.getContext("2d");
+
+
+let marsRoverX = 40;
+
+let marsRoverMoving = false;
+
+let marsDistanceTravelled = 0;
+
+let marsSampleCount = 0;
+
+let marsMissionFinished = false;
+
+
+// Rover deployment
+
+function deployMarsRover(){
+
+
+if(marsRoverMoving){
+return;
+}
+
+
+marsRoverMoving = true;
+
+
+document.getElementById("marsStatus").innerHTML =
+"Exploring";
+
+
+addMarsLog("🚀 Rover deployed from spacecraft.");
+
+addMarsLog("🪨 Geological scan started.");
+
+}
+
+
+
+// Mission log
+
+function addMarsLog(message){
+
+
+let logBox =
+document.getElementById("marsLogs");
+
+
+if(logBox.innerHTML.includes("Awaiting rover")){
+logBox.innerHTML="";
+}
+
+
+
+let entry =
+document.createElement("div");
+
+
+entry.className="log-entry";
+
+
+entry.innerHTML =
+"• " + message;
+
+
+logBox.appendChild(entry);
+
+
+logBox.scrollTop =
+logBox.scrollHeight;
+
+
+}
+
+
+
+// Canvas drawing
+
+function drawMarsExplorer(){
+
+
+marsCtx.clearRect(
+0,
+0,
+380,
+260
+);
+
+
+
+// SPACE BACKGROUND
+
+marsCtx.fillStyle="#02020b";
+
+marsCtx.fillRect(
+0,
+0,
+380,
+260
+);
+
+
+
+// STARS
+
+marsCtx.fillStyle="white";
+
+
+for(let i=0;i<40;i++){
+
+
+let starX =
+(i*47)%380;
+
+
+let starY =
+(i*83)%120;
+
+
+marsCtx.fillRect(
+starX,
+starY,
+2,
+2
+);
+
+
+}
+
+
+
+// MARS TERRAIN
+
+
+marsCtx.fillStyle="#8b3f24";
+
+
+marsCtx.fillRect(
+0,
+150,
+380,
+110
+);
+
+
+
+// mountains
+
+
+marsCtx.fillStyle="#5c2418";
+
+
+marsCtx.beginPath();
+
+marsCtx.moveTo(0,160);
+
+marsCtx.lineTo(80,90);
+
+marsCtx.lineTo(150,160);
+
+marsCtx.fill();
+
+
+
+marsCtx.beginPath();
+
+marsCtx.moveTo(180,160);
+
+marsCtx.lineTo(270,70);
+
+marsCtx.lineTo(380,160);
+
+marsCtx.fill();
+
+
+
+
+// craters
+
+
+marsCtx.fillStyle="#3d1812";
+
+
+marsCtx.beginPath();
+
+marsCtx.arc(
+100,
+210,
+20,
+0,
+Math.PI*2
+);
+
+marsCtx.fill();
+
+
+
+marsCtx.beginPath();
+
+marsCtx.arc(
+310,
+190,
+25,
+0,
+Math.PI*2
+);
+
+marsCtx.fill();
+
+
+
+
+// rocks
+
+marsCtx.fillStyle="#b06b45";
+
+
+for(let i=0;i<8;i++){
+
+
+marsCtx.beginPath();
+
+
+marsCtx.arc(
+40+i*45,
+180+(i%2)*25,
+6,
+0,
+Math.PI*2
+);
+
+
+marsCtx.fill();
+
+
+}
+
+
+
+
+// ROVER
+
+
+marsCtx.fillStyle="#777";
+
+
+marsCtx.fillRect(
+marsRoverX,
+135,
+35,
+20
+);
+
+
+// wheels
+
+marsCtx.fillStyle="black";
+
+
+marsCtx.beginPath();
+
+marsCtx.arc(
+marsRoverX+8,
+158,
+7,
+0,
+Math.PI*2
+);
+
+marsCtx.fill();
+
+
+marsCtx.beginPath();
+
+marsCtx.arc(
+marsRoverX+28,
+158,
+7,
+0,
+Math.PI*2
+);
+
+marsCtx.fill();
+
+
+
+// antenna
+
+marsCtx.strokeStyle="white";
+
+marsCtx.beginPath();
+
+marsCtx.moveTo(
+marsRoverX+18,
+135
+);
+
+marsCtx.lineTo(
+marsRoverX+18,
+120
+);
+
+marsCtx.stroke();
+
+
+
+// rover movement
+
+
+if(marsRoverMoving && marsRoverX < 330){
+
+
+marsRoverX += .5;
+
+
+marsDistanceTravelled += .05;
+
+
+
+document.getElementById("marsDistance").innerHTML =
+Math.floor(marsDistanceTravelled);
+
+
+
+}
+
+
+
+// discoveries
+
+if(marsDistanceTravelled > 20 && marsSampleCount===0){
+
+
+marsSampleCount++;
+
+document.getElementById("marsSamples").innerHTML =
+marsSampleCount;
+
+
+addMarsLog("🪨 Rock sample collected from ancient riverbed.");
+
+addMarsLog("📦 Sample stored in rover laboratory.");
+
+document.getElementById("analyzeMarsSampleButton").style.display="inline-block";
+
+
+}
+
+
+if(marsDistanceTravelled > 45 && marsSampleCount===1){
+
+
+marsSampleCount++;
+
+
+document.getElementById("marsSamples").innerHTML =
+marsSampleCount;
+
+
+addMarsLog("💧 Ancient mineral deposits detected.");
+
+}
+
+
+
+if(marsDistanceTravelled > 70 && marsSampleCount===2){
+
+
+marsSampleCount++;
+
+
+document.getElementById("marsSamples").innerHTML =
+marsSampleCount;
+
+
+addMarsLog("🧪 Organic molecule analysis complete.");
+
+}
+
+
+
+if(marsDistanceTravelled > 100 && !marsMissionFinished){
+
+
+marsMissionFinished=true;
+
+
+marsRoverMoving=false;
+
+
+document.getElementById("marsStatus").innerHTML =
+"Mission Complete";
+
+
+addMarsLog("🌊 Evidence suggests ancient water activity.");
+
+addMarsLog("📡 Data transmitted to Mission Control.");
+
+
+
+document.getElementById("marsFinalReport").style.display =
+"block";
+
+
+}
+
+
+
+requestAnimationFrame(drawMarsExplorer);
+
+
+}
+
+
+
+drawMarsExplorer();
+    // =================================
+// MARS SAMPLE ANALYSIS SYSTEM
+// =================================
+
+
+let marsSampleAnalyzed = false;
+
+
+
+function unlockMarsAnalysis(){
+
+
+document.getElementById("analyzeMarsSampleButton").style.display="inline-block";
+
+
+addMarsLog("📦 Sample stored inside rover laboratory.");
+
+addMarsLog("🔬 Ready for scientific analysis.");
+
+}
+
+
+
+function analyzeMarsSample(){
+
+if(marsSampleAnalyzed){
+return;
+}
+
+marsSampleAnalyzed=true;
+
+
+document.getElementById("marsSampleLab").style.display="block";
+
+
+document.getElementById("marsAnalysisText").innerHTML =
+
+"🔬 Scanning sample...";
+
+
+addMarsLog("🔬 Beginning mineral and chemistry analysis.");
+
+
+
+setTimeout(function(){
+
+
+document.getElementById("marsAnalysisText").innerHTML =
+
+`
+🪨 Mineral Analysis:
+<br>
+Clay minerals detected.
+<br><br>
+
+💧 Water History:
+<br>
+Minerals suggest ancient liquid water interacted with Martian rocks.
+<br><br>
+
+🧪 Organic Chemistry:
+<br>
+Possible organic molecules detected.
+<br><br>
+
+🧬 Life Evidence:
+<br>
+No confirmed life detected. More research required.
+<br><br>
+
+🌎 Habitability Result:
+<br>
+Ancient Mars had environments that may have been suitable for microbial life.
+`;
+
+
+
+addMarsLog("✅ Sample analysis complete.");
+
+addMarsLog("🧬 Evidence supports past habitability research.");
+
+
+document.getElementById("marsScientistDecision").style.display="block";
+
+
+},3000);
+
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LOOP | Life on Other Planets</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #070014, #020105);
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* asteroid layer */
+#asteroids {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* keeps it behind text */
+}
+
+/*  NAVBAR */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(10,5,30,0.6);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(125,249,255,0.2);
+  z-index: 10;
+}
+/* STAR LAYER */
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+@keyframes float {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(140vw); }
+}
+/* FLOATING PLANETS */
+.planet {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.12;
+  z-index: 0;
+  filter: blur(0.3px);
+
+  animation-name: float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+nav a {
+  color: #7df9ff;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 12px;
+}
+
+/*  HERO */
+.hero {
+  text-align: center;
+  padding: 140px 20px 80px;
+}
+  .section, .hero, nav {
+  position: relative;
+  z-index: 5;
+}
+
+.hero h1 {
+  font-size: 48px;
+  color: #7df9ff;
+  text-shadow: 0 0 25px #7df9ff;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 20px auto;
+  opacity: 0.8;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  background: linear-gradient(90deg, #7df9ff, #b56bff);
+  color: #05010a;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px #7df9ff;
+}
+
+/* SECTION */
+.section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.section h2 {
+  color: #7df9ff;
+  text-shadow: 0 0 10px #7df9ff;
+}
+
+.card {
+  background: rgba(20,10,40,0.5);
+  padding: 18px;
+  border-radius: 14px;
+  margin-top: 15px;
+  border: 1px solid rgba(125,249,255,0.2);
+}
+
+/*  MISSION BOXES */
+.missions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.mission {
+  background: rgba(10,5,30,0.6);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(125,249,255,0.2);
+}
+
+.mission h3 {
+  color: #b56bff;
+  margin-bottom: 10px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  opacity: 0.6;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+  <canvas id="asteroids"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div> LOOP</div>
+  <div>
+    <a href= "blog.html">EXPLORE</a>
+    <a href="#about">ABOUT</a>
+    <a href="missions.html">MISSIONS</a>
+    <a href="spacechat.html">SPACECHAT</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>LOOP</h1>
+  <p>Life on Other Planets — a student-built platform for scientific thinking through observation, hypothesis, and explanation.</p>
+
+  <a class="btn" href="spacechat.html"> Enter SPACECHAT</a>
+  <a class="btn" href="missions.html"> Start Missions</a>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <h2>What is LOOP?</h2>
+
+  <div class="card" style="
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+  ">
+    LOOP is a student-built platform with the intent to encourage more people to get involved in
+    outer space research. Our primary focus is curiosity towards the possibility of life on other
+    planets and studying their environments. On this website you can find mini research missions
+    to complete, experiment ebooks, productive space chat, and resources to help you learn more about
+    our universe.
+  </div>
+</div>
+
+<!-- WHY IT MATTERS -->
+<div class="section">
+  <h2>Why It Matters</h2>
+
+  <div class="card" style="
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+  ">
+    LOOP helps students use simulations and research to learn more about space, and strengthen
+    scientific thinking skills. People of all ages should have access to a guided STEM platform,
+    so we have experiments ranging from beginner to advanced levels in our ebooks.
+  </div>
+</div>
+
+<!-- MISSIONS -->
+<div class="section" id="missions">
+  <h2>LOOP Checklist</h2>
+
+  <div class="missions">
+    <div class="mission">
+      <h3>Exoplanet Investigation</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Pick any exoplanet and run an investigation to conclude whether you think it could support
+        life or not. Share your conclusion with the LOOP community.
+      </p>
+    </div>
+
+    <div class="mission">
+      <h3>Habitat Design</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Design a habitat that could support an astronaut living on Mars for a full year.
+      </p>
+    </div>
+
+    <div class="mission">
+      <h3>Invention Creation</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Create a simple space-related invention and share it with the LOOP community.
+      </p>
+    </div>
+
+    <div class="mission">
+      <h3>Star Observation</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Go outside and pick a star to observe for 10 minutes. Record any changes you notice in
+        brightness or color. Explain what you saw as atmospheric effects, normal star changes,
+        or something unknown.
+      </p>
+    </div>
+
+    <div class="mission">
+      <h3>Planetarium Visit</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Visit a planetarium and share something new that you learned about space.
+      </p>
+    </div>
+
+    <div class="mission">
+      <h3>Mini Rocket Engineering</h3>
+      <p style="font-family:'Inter', sans-serif; font-size:17px; line-height:1.7; letter-spacing:0.3px;">
+        Create a paper or straw rocket and test how different designs affect flight and stability.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- REAL RESOURCES -->
+<div class="section">
+  <h2>Real Space Tools</h2>
+
+  <div class="card">
+    🌌 NASA APOD: https://apod.nasa.gov/apod/astropix.html
+  </div>
+
+  <div class="card">
+    🔭 Stellarium Sky Map: https://stellarium-web.org
+  </div>
+
+  <div class="card">
+    🪐 Sky & Telescope: https://skyandtelescope.org
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="section">
+  <h2>Start Thinking Like a Scientist</h2>
+  <div class="card">
+    Take your first observation, build a hypothesis, and share it in SPACECHAT.
+  </div>
+
+  <a class="btn" href="spacechat.html">🚀 Enter SPACECHAT</a>
+</div>
+
+<footer>
+  LOOP Project — Built for scientific reasoning and space exploration thinking.
+</footer>
+<script>
+const canvas = document.getElementById("asteroids");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let asteroids = [];
+
+function createAsteroid() {
+  let points = [];
+  let sides = Math.floor(Math.random() * 5) + 6; // 6–10 sides
+
+  for (let i = 0; i < sides; i++) {
+    let angle = (Math.PI * 2 / sides) * i;
+    let radius = Math.random() * 8 + 6; // uneven shape
+    points.push({ angle, radius });
+  }
+
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 1.5 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: (Math.random() - 0.5) * 0.4,
+    rotation: Math.random() * Math.PI,
+    rotSpeed: (Math.random() - 0.5) * 0.01,
+    shape: points
+  };
+}
+
+// spawn asteroids
+for (let i = 0; i < 35; i++) {
+  asteroids.push(createAsteroid());
+}
+
+function drawAsteroid(a) {
+  ctx.save();
+  ctx.translate(a.x, a.y);
+  ctx.rotate(a.rotation);
+  ctx.scale(a.size, a.size);
+
+  // base rock color
+  ctx.fillStyle = "#6b6b6b";
+  ctx.beginPath();
+
+  let first = true;
+
+  for (let p of a.shape) {
+    let x = Math.cos(p.angle) * p.radius;
+    let y = Math.sin(p.angle) * p.radius;
+
+    if (first) {
+      ctx.moveTo(x, y);
+      first = false;
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+
+  ctx.closePath();
+  ctx.fill();
+
+  // fake shadow side (gives 3D feel)
+  ctx.fillStyle = "rgba(0,0,0,0.25)";
+  ctx.beginPath();
+  ctx.arc(2, 2, 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let a of asteroids) {
+    drawAsteroid(a);
+
+    a.x += a.speedX;
+    a.y += a.speedY;
+    a.rotation += a.rotSpeed;
+
+    // wrap screen
+    if (a.x < -50) a.x = canvas.width + 50;
+    if (a.x > canvas.width + 50) a.x = -50;
+    if (a.y < -50) a.y = canvas.height + 50;
+    if (a.y > canvas.height + 50) a.y = -50;
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>

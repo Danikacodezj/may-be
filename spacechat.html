@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SPACECHAT | LOOP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #070014, #020105);
+  color: #e6f0ff;
+  overflow: hidden;
+}
+
+/* STAR LAYER */
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+@keyframes float {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(140vw); }
+}
+/* FLOATING PLANETS */
+.planet {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.12;
+  z-index: 0;
+  filter: blur(0.3px);
+
+  animation-name: float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#saturn {
+  background: radial-gradient(circle, #ffd27d, #6b4e1e);
+  top: 10%;
+  left: -150px;
+
+  animation-duration: 40s;
+}
+
+/* 🪐 Saturn Rings */
+#saturn::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 60px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  border-radius: 50%;
+
+  border: 2px solid rgba(60, 80, 120, 0.7);
+  box-shadow:
+    0 0 10px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(20, 40, 80, 0.4);
+}
+
+#earth {
+  background:
+    radial-gradient(circle at 30% 30%, #2cff6b 0%, transparent 35%),
+    radial-gradient(circle at 70% 60%, #1fae4a 0%, transparent 40%),
+    radial-gradient(circle at 40% 75%, #2cff6b 0%, transparent 30%),
+    radial-gradient(circle, #4aa3ff, #0b1a3a);
+
+  top: 70%;
+  left: -200px;
+  animation-duration: 25s;
+}
+#jupiter {
+  width: 160px;
+  height: 160px;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #c28a4a,
+      #c28a4a 10px,
+      #8b5a2b 10px,
+      #8b5a2b 20px
+    );
+
+  top: 30%;
+  left: -250px;
+
+  animation-duration: 55s;
+}
+  #neptune {
+  width: 110px;
+  height: 110px;
+
+  background: radial-gradient(circle, #4aa3ff, #0a1a3a);
+
+  top: 80%;
+  left: -300px;
+
+  animation-duration: 35s;
+}
+  #mars {
+  width: 80px;
+  height: 80px;
+
+  background: radial-gradient(circle, #ff6b4a, #5a1a10);
+
+  top: 45%;
+  left: -220px;
+
+  animation-duration: 28s;
+}
+
+#moon {
+  background:
+    radial-gradient(circle at 30% 30%, #666 0%, transparent 25%),
+    radial-gradient(circle at 70% 60%, #444 0%, transparent 30%),
+    radial-gradient(circle at 50% 50%, #f0f0f0, #9a9a9a);
+
+  top: 55%;
+  left: -180px;
+
+  animation-duration: 22s;
+}
+  #moon {
+  width: 60px;
+  height: 60px;
+}
+
+/* MAIN */
+#container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* LEFT PANEL */
+#left {
+  width: 320px;
+  background: rgba(10, 5, 30, 0.45);
+  padding: 15px;
+  border-right: 1px solid rgba(125,249,255,0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(125,249,255,0.15);
+}
+
+/* GLOW TITLE */
+h2 {
+  color: #7df9ff;
+  text-shadow: 0 0 10px #7df9ff, 0 0 30px #00c3ff;
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  0% { text-shadow: 0 0 10px #7df9ff; }
+  50% { text-shadow: 0 0 25px #7df9ff; }
+  100% { text-shadow: 0 0 10px #7df9ff; }
+}
+
+/* INPUTS */
+input, textarea, select {
+  width: 85%;
+  margin: 10px auto;
+  display: block;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(18,10,42,0.6);
+  color: #e6f0ff;
+  border: 1px solid rgba(125,249,255,0.25);
+  box-shadow: 0 0 10px rgba(125,249,255,0.1);
+}
+input:focus, textarea:focus, select:focus {
+  border: 1px solid #7df9ff;
+  box-shadow: 0 0 15px #7df9ff55;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  background: linear-gradient(90deg, #7df9ff, #b56bff);
+  color: #05010a;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 20px #7df9ff, 0 0 40px #b56bff;
+  transform: translateY(-2px);
+}
+
+/* FEED */
+#feed {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* POSTS */
+.post {
+  background: rgba(18, 10, 42, 0.5);
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(125,249,255,0.25);
+  backdrop-filter: blur(8px);
+  transition: 0.3s;
+}
+
+.post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(125,249,255,0.25);
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.tag.observation { background:#33d1ff; color:#000; }
+.tag.hypothesis { background:#c56cff; color:#fff; }
+.tag.likely { background:#3cff88; color:#000; }
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- FLOATING PLANETS -->
+<div class="planet" id="saturn"></div>
+<div class="planet" id="earth"></div>
+<div class="planet" id="moon"></div>
+<div class="planet" id="jupiter"></div>
+<div class="planet" id="neptune"></div>
+<div class="planet" id="mars"></div>
+
+<div id="container">
+
+  <div id="left">
+    <h2>SPACECHAT</h2>
+
+    <input id="title" placeholder="Transmission Title">
+    <textarea id="desc" placeholder="Describe your observation..."></textarea>
+
+    <select id="type">
+      <option value="observation">Observation</option>
+      <option value="hypothesis">Hypothesis</option>
+      <option value="likely">Likely Explanation</option>
+    </select>
+
+    <button onclick="post()">TRANSMIT</button>
+
+    <div style="margin-top:15px;font-size:12px;opacity:.85;font-family:Arial,Helvetica,sans-serif;line-height:1.6;">
+      <b><span style="color:#9fdcff;text-shadow:0 0 5px #6a5cff,0 0 10px #4fc3ff,0 0 18px #8a2be2;">Observation:</span></b>
+      Write a space-related observation.<br>
+
+      <b><span style="color:#9fdcff;text-shadow:0 0 5px #6a5cff,0 0 10px #4fc3ff,0 0 18px #8a2be2;">Hypothesis:</span></b>
+      Write a hypothesis you have for an event or experiment.<br>
+
+      <b><span style="color:#9fdcff;text-shadow:0 0 5px #6a5cff,0 0 10px #4fc3ff,0 0 18px #8a2be2;">Likely Explanation:</span></b>
+      Reply to someone's observation with a probable cause.
+    </div>
+
+  </div>
+
+  <div id="feed"></div>
+
+</div>
+
+<script>
+let posts = JSON.parse(localStorage.getItem("spacechat_posts") || "[]");
+
+function render(){
+  const feed = document.getElementById("feed");
+  feed.innerHTML = "";
+
+  posts.slice().reverse().forEach(p => {
+    const div = document.createElement("div");
+    div.className = "post";
+
+    let label =
+      p.type === "observation" ? "OBSERVATION" :
+      p.type === "hypothesis" ? "HYPOTHESIS" :
+      "LIKELY EXPLANATION";
+
+    div.innerHTML = `
+      <b>${p.title}</b><br>
+      <div style="margin-top:6px">${p.desc}</div>
+      <div class="tag ${p.type}">${label}</div>
+    `;
+
+    feed.appendChild(div);
+  });
+}
+
+function post(){
+  const title = document.getElementById("title").value.trim();
+  const desc = document.getElementById("desc").value.trim();
+  const type = document.getElementById("type").value;
+
+  if(!title || !desc) return;
+
+  posts.push({title, desc, type});
+  localStorage.setItem("spacechat_posts", JSON.stringify(posts));
+
+  document.getElementById("title").value = "";
+  document.getElementById("desc").value = "";
+  document.getElementById("type").selectedIndex = 0;
+
+  render();
+}
+
+render();
+
+/* STARFIELD */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let stars = Array.from({length:140}, () => ({
+  x: Math.random()*window.innerWidth,
+  y: Math.random()*window.innerHeight,
+  r: Math.random()*1.5,
+  d: Math.random()*0.5 + 0.2
+}));
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "white";
+
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fill();
+
+    s.y += s.d;
+    if(s.y > canvas.height){
+      s.y = 0;
+      s.x = Math.random()*canvas.width;
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+  function shootingStar(){
+  const x = Math.random() * canvas.width;
+  const y = Math.random() * canvas.height / 2;
+
+  let length = 0;
+
+  function animate(){
+    ctx.strokeStyle = "white";
+    ctx.beginPath();
+    ctx.moveTo(x + length, y + length);
+    ctx.lineTo(x + length + 10, y + length + 10);
+    ctx.stroke();
+
+    length += 10;
+
+    if(length < 200){
+      requestAnimationFrame(animate);
+    }
+  }
+
+  animate();
+}
+
+setInterval(shootingStar, 6000);
+</script>
+
+</body>

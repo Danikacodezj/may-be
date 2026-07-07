@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LOOP | Space Information</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: black;
+  color: #e6f0ff;
+  overflow-x: hidden;
+}
+  .back-btn {
+  display: inline-block;
+  margin: 10px auto 20px auto;
+  padding: 8px 14px;
+  color: #4de1ff;
+  border: 1px solid #4de1ff;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.back-btn:hover {
+  background: rgba(77, 225, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* STAR CANVAS BACKGROUND */
+#space {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* subtle glow overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, rgba(0,255,255,0.08), transparent 60%),
+              radial-gradient(circle at bottom, rgba(120,0,255,0.08), transparent 60%);
+  z-index: -1;
+}
+
+/* PAGE CONTAINER */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px;
+}
+
+/* SECTION ROW */
+.section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  background: rgba(255,255,255,0.04);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(4px);
+}
+
+/* SMALL IMAGE */
+.section img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* TEXT */
+.section p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+h1 {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: #4de1ff;
+  text-shadow:
+    0 0 5px #4de1ff,
+    0 0 15px #4de1ff,
+    0 0 30px rgba(77,225,255,0.8);
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  border: 1px solid #4de1ff;
+  border-radius: 20px;
+  color: #4de1ff;
+}
+  /* PLANET CARD GRID */
+
+.planet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 340px);
+  justify-content: center;
+  gap: 40px;
+}
+
+
+.planet-card {
+  width: 340px;
+  height: 345px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+
+.planet-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(77,225,255,0.8);
+}
+
+
+.planet-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: black;
+}
+
+
+.planet-name {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(transparent, black);
+}
+
+
+/* POPUP WINDOW */
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 600px;
+  padding: 30px;
+  background: rgba(5,10,25,0.95);
+  border: 1px solid #4de1ff;
+  border-radius: 20px;
+  z-index: 10;
+  box-shadow: 0 0 40px #4de1ff;
+}
+
+
+.popup h2 {
+  color: #4de1ff;
+}
+
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 25px;
+  color: #4de1ff;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="space"></canvas>
+<div class="overlay"></div>
+
+<h1>LOOP Exploration Database</h1>
+  <a href="index.html" class="back-btn">← Back</a>
+
+<div class="container">
+
+<div class="planet-grid">
+
+
+<div class="planet-card" onclick="openPopup('europa')">
+<img src="europa.png">
+<div class="planet-name">Europa</div>
+</div>
+
+
+<div class="planet-card" onclick="openPopup('mars')">
+<img src="mars.jpeg">
+<div class="planet-name">Mars</div>
+</div>
+
+
+<div class="planet-card" onclick="openPopup('titan')">
+<img src="titan.jpeg">
+<div class="planet-name">Titan</div>
+</div>
+
+
+<div class="planet-card" onclick="openPopup('trappist')">
+<img src="TRAPPIST-1e.jpeg">
+<div class="planet-name">TRAPPIST-1e</div>
+</div>
+
+
+</div>
+
+</div>
+  <div id="popup" class="popup">
+
+<span class="close" onclick="closePopup()">×</span>
+
+<h2 id="popupTitle"></h2>
+
+<p id="popupText"></p>
+
+</div>
+
+<script>
+  const planetInfo = {
+
+europa:{
+title:"Europa",
+text:"Europa is one of Jupiter's 95 known moons, and scientists are investigating beneath its icy surface to discover possible conditions for life. Under Europa's thick layer of ice, scientists believe there is a vast, salty ocean that holds more water than all of Earth's oceans combined. With Jupiter's strong gravitational pull, temperatures may heat up to a point where the building blocks of life could be suited here."
+},
+
+
+mars:{
+title:"Mars",
+text:"While Mars may seem solely like a dry and cold desert, it is the planet most similar to Earth in our solar system. Scientists have evidence of rivers and lakes flowing on the surface of Mars in the past. Missions like NASA's Perseverance rover are trying to figure out if life existed on Mars in the past, and if it could exist there in the future."
+},
+
+
+titan:{
+title:"Titan",
+text:"Titan is Saturn's largest moon and the only moon known to have a thick atmosphere. Its atmosphere consists mostly of nitrogen, with methane as well. This atmosphere creates an orange haze around Titan's surface. Titan has lakes, oceans, and seas beneath this haze, but they are filled with liquid methane and ethane. Scientists believe that beneath Titan's icy crust there may be an ocean containing water, which contributes to the search for an environment that could support life. NASA's upcoming Dragonfly mission will explore this world up close and reveal secrets this moon may be holding."
+},
+
+
+trappist:{
+title:"TRAPPIST-1e",
+text:"TRAPPIST-1e is part of the TRAPPIST-1 system, which contains seven Earth-sized worlds orbiting a red dwarf star around 40 light years away from Earth. This exoplanet is one of our most promising worlds to search for life because it is located in its star's habitable zone, where temperatures may allow water to exist on its surface. While scientists do not know its exact conditions yet, it is believed to be rocky and could possibly support an atmosphere."
+}
+
+};
+
+function openPopup(planet){
+
+document.getElementById("popup").style.display="block";
+
+document.getElementById("popupTitle").innerHTML =
+planetInfo[planet].title;
+
+document.getElementById("popupText").innerHTML =
+planetInfo[planet].text;
+
+}
+
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none";
+
+}
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for (let i = 0; i < 120; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5,
+    speed: Math.random() * 0.3 + 0.05
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+
+  for (let s of stars) {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    s.y += s.speed;
+
+    if (s.y > canvas.height) {
+      s.y = 0;
+      s.x = Math.random() * canvas.width;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
